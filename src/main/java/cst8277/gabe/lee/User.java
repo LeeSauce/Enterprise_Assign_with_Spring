@@ -3,27 +3,27 @@ package cst8277.gabe.lee;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "USER") // Ensure this matches your actual table name
+@Table(name = "USER")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name") // Specify column name if necessary
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "email") // Specify column name if necessary
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "password") // Specify column name if necessary
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "role") // Specify column name if necessary
+    @Column(name = "role")
     private String role;
 
     public User() {
-        // Default constructor
+
     }
 
     public User(long id, String name, String email, String password, String role) {
