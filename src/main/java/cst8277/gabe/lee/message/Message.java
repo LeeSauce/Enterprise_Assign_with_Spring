@@ -1,5 +1,6 @@
-package cst8277.gabe.lee;
+package cst8277.gabe.lee.message;
 
+import cst8277.gabe.lee.user.User;
 import jakarta.persistence.*;
 
 @Entity

@@ -1,4 +1,4 @@
-package cst8277.gabe.lee;
+package cst8277.gabe.lee.message;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package cst8277.gabe.lee;
+package cst8277.gabe.lee.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
