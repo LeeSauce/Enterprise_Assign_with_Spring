@@ -10,9 +10,13 @@ import java.util.List;
 public class GetMessageController {
 
     @Autowired
-    private MessageRepo messageRepo;
-    @GetMapping("get/message")
+    MessageService messageService;
+
+    public GetMessageController(MessageService messageService) {
+        this.messageService = messageService;
+    }
+
     public List<Message> getMessages() {
-        return messageRepo.findAll();
+        return messageService.getMessages();
     }
 }

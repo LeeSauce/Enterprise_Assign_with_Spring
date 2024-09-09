@@ -33,6 +33,7 @@ public class UserManagement {
                 .findFirst();
 
         if (userOptional.isPresent()) {
+            login.setToken();
             loginRepo.save(login);
             return "Logged in successfully";
         }

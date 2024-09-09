@@ -15,7 +15,7 @@ public class Login {
     @Column
     private String password;
     @Column
-    private final String token = UUID.randomUUID().toString();
+    private String token;
 
 
     public void setId(Long id) {
@@ -46,6 +46,9 @@ public class Login {
         return token;
     }
 
+    public void setToken() {
+        this.token = UUID.randomUUID().toString();
+    }
 
     @Override
     public String toString() {
