@@ -1,16 +1,16 @@
 package cst8277.gabe.lee.message;
 
+import cst8277.gabe.lee.subscriber.SubscriberController;
 import cst8277.gabe.lee.user.Login;
 import cst8277.gabe.lee.user.LoginRepo;
 import cst8277.gabe.lee.user.User;
 import cst8277.gabe.lee.user.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -23,8 +23,6 @@ public class MessageService {
     private UserRepo userRepository;
     private MessageRepo messageRepository;
     private LoginRepo loginRepository;
-    @Autowired
-    private MessageRepo messageRepo;
 
     public MessageService(UserRepo userRepository, MessageRepo messageRepository, LoginRepo loginRepository) {
         this.userRepository = userRepository;
@@ -41,8 +39,34 @@ public class MessageService {
         long userId = message.getUser().getId();
         if(!validateToken(userId))return "User not validated, message was not posted";
         if(!canPost(userId)) return "User cannot post";
-        messageRepo.save(message);
+        messageRepository.save(message);
         return "Message posted";
+    }
+
+    public List<Message> getMessagesByUserId(@RequestParam long subscriptionId, SubscriberController subController) {
+        if (!validateToken(subscriptionId)) return null;
+        List<User> publishers = subController.getSubs(subscriptionId);
+        List<Message> messages = getMessages();
+        List<Message> filteredMessages = new ArrayList<>();
+
+
+        for(User publisher : publishers) {
+            for(Message message : messages) {
+                if(message.getUser().getId() == publisher.getId()) filteredMessages.add(message);
+            }
+        }
+        return filteredMessages;
+    }
+
+    public List<Message> getMessagesByUserId(@RequestParam long subscriptionId, @RequestParam long publisherId) {
+        if (!validateToken(subscriptionId)) return null;
+        List<Message> messages = getMessages();
+        List<Message> filteredMessages = new ArrayList<>();
+
+        for(Message message : messages) {
+            if(message.getUser().getId() == publisherId) filteredMessages.add(message);
+        }
+        return filteredMessages;
     }
 
     private boolean validateToken(long id){
