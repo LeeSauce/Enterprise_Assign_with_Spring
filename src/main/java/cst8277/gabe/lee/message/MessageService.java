@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@RestController
+
 @Service
 public class MessageService {
 
@@ -33,12 +33,10 @@ public class MessageService {
     }
 
     //Get all messages
-    @GetMapping("get/message")
     public List<Message> getMessages() {
         return messageRepository.findAll();
     }
 
-    @PostMapping("/post/message")
     public String postMessage(@RequestBody Message message) {
         long userId = message.getUser().getId();
         if(!validateToken(userId))return "User not validated, message was not posted";
